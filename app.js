@@ -9,34 +9,24 @@ require("./db");
 // https://www.npmjs.com/package/express
 const express = require("express");
 
-// Handles the handlebars
-// https://www.npmjs.com/package/hbs
-const hbs = require("hbs");
-
 const app = express();
 
 // ℹ️ This function is getting exported from the config folder. It runs most pieces of middleware
 require("./config")(app);
-require('./config/session.config')(app);
 
-// default value for title local
-const capitalize = require("./utils/capitalize");
-const projectName = "cute not cringe";
-//global object available to all pages 
-app.locals.appTitle = `${capitalize(projectName)} `;
-app.use((req, res, next) => {
-    app.locals.userInSession = req.session.currentUser;
-    next()
-})
 // 👇 Start handling routes here
 const indexRoutes = require("./routes/index.routes");
-const authRoutes = require('./routes/auth.routes')
-const postsRoutes = require('./routes/posts.routes');
-const userRoutes = require('./routes/user.routes')
-app.use("/", indexRoutes);
-app.use('/',authRoutes);
-app.use('/',postsRoutes);
-app.use('/',userRoutes);
+app.use("/api", indexRoutes);
+
+const authRoutes = require("./routes/auth.routes");
+app.use("/auth", authRoutes);
+
+const postRoutes = require("./routes/posts.routes")
+app.use("/api", postRoutes)
+
+const commentRoutes = require("./routes/comments.routes")
+app.use("/api", commentRoutes)
+
 
 // ❗ To handle errors. Routes that don't exist or errors that you handle in specific routes
 require("./error-handling")(app);
