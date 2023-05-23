@@ -5,14 +5,8 @@ const commentSchema = new Schema({
         type: String, 
         required: true
     }, 
-    author:{
-        type: String, 
-        required: true
-    },
-    post:{ type: Schema.Types.ObjectId, ref: 'Post' },
-    owner: Boolean
+    author:{ type: Schema.Types.ObjectId, ref: "User" },
 })
 
-const Comment = model("Comment", commentSchema);
 
-module.exports = Comment;
+module.exports = model("Comment", commentSchema);

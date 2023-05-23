@@ -1,7 +1,7 @@
 const { Schema, model } = require("mongoose");
 
-const postSchema = new Schema({
-  title: {
+const postSchema = new Schema(
+{  title: {
     type: String,
     required: true,
   },
@@ -16,18 +16,15 @@ const postSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "User" },
   imageUrl: {
     type: String,
-    required: true,
+    required:true,
   },
-  owner:Boolean,
-  comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }], 
-  // comments: [
-  //   {
-  //     message: String,
-  //     author: { type: Schema.Types.ObjectId, ref: "User" },
-  //   },
-  // ]
-}); // maybe implement animal tags for a search function?
+  comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }] },
 
-const Post = model("Post", postSchema);
+  {
+    timestamps: true
+  }
+  
+); // maybe implement animal tags for a search function?
 
-module.exports = Post;
+
+module.exports = model("Post", postSchema);
